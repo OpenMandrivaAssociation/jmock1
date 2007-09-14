@@ -34,8 +34,7 @@
 
 Name:           jmock1
 Version:        1.2.0
-Release:        1jpp
-Epoch:          0
+Release:        %mkrel 1
 Summary:        Test Java code using mock objects
 
 Group:          Development/Libraries/Java
@@ -49,9 +48,8 @@ Source2:        jmock-cglib-1.2.0.pom
 
 Patch0:         jmock-1.2.0-AssertMo.patch
 Patch1:         jmock-1.2.0-build_xml.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:%{_vendor}}
-Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
+Patch2:		jmock-asm_rename.patch
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %if ! %{gcj_support}
 BuildArch:      noarch
@@ -100,20 +98,21 @@ Group:          Development/Documentation
 %{summary}.
 
 %prep
-%setup -q 
+%setup -q -n jmock-%version
 for j in $(find . -name "*.jar"); do
     mv $j $j.no
 done
 
 %patch0 -b .sav
 %patch1 -b .sav
+%patch2 -p1
 
 %build
 export OPT_JAR_LIST="ant/ant-junit junit"
 
 export CLASSPATH=$(build-classpath \
 asm \
-cglib-nodep)
+cglib-nohook)
 
 CLASSPATH=build/classes:$CLASSPATH
 ant -Dbuild.sysclasspath=only package
@@ -122,12 +121,12 @@ ant -Dbuild.sysclasspath=only package
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -Dpm 644 build/%{name}-core-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-install -pm 644 build/%{name}-cglib-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-cglib-%{version}.jar
-install -pm 644 build/%{name}-tests-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-tests-%{version}.jar
+install -Dpm 644 build/jmock-core-%{version}.jar \
+  $RPM_BUILD_ROOT%{_javadir}/jmock-%{version}.jar
+install -pm 644 build/jmock-cglib-%{version}.jar \
+  $RPM_BUILD_ROOT%{_javadir}/jmock-cglib-%{version}.jar
+install -pm 644 build/jmock-tests-%{version}.jar \
+  $RPM_BUILD_ROOT%{_javadir}/jmock-tests-%{version}.jar
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 %add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
