@@ -68,6 +68,7 @@ BuildRequires:    java-gcj-compat-devel
 Requires(post):   java-gcj-compat
 Requires(postun): java-gcj-compat
 %endif
+Provides:	jmock = %{version}-%{release}
 
 %description
 jMock is a library for testing Java code using mock objects.
