@@ -37,7 +37,7 @@ Version:        1.2.0
 Release:        %mkrel 1
 Summary:        Test Java code using mock objects
 
-Group:          Development/Libraries/Java
+Group:          Development/Java
 License:        Open Source
 URL:            http://jmock.codehaus.org/
 Source0:        jmock-1.2.0.tar.gz
@@ -84,7 +84,7 @@ The jMock package:
 
 %package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 Requires(post):   /bin/rm,/bin/ln
 Requires(postun): /bin/rm
 
@@ -93,7 +93,7 @@ Requires(postun): /bin/rm
 
 %package        demo
 Summary:        Examples for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 
 %description    demo
 %{summary}.
