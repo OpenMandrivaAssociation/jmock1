@@ -54,6 +54,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 %if ! %{gcj_support}
 BuildArch:      noarch
 %endif
+BuildRequires:	java-devel >= 1.7.0
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit
