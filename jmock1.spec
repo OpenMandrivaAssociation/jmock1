@@ -34,7 +34,7 @@
 
 Name:           jmock1
 Version:        1.2.0
-Release:        %mkrel 2
+Release:        %mkrel 2.0.1
 Summary:        Test Java code using mock objects
 
 Group:          Development/Java
@@ -61,10 +61,9 @@ BuildRequires:  ant-junit
 BuildRequires:  junit >= 0:3.8.1
 BuildRequires:  cglib-nohook >= 0:2.1.3
 BuildRequires:  asm >= 0:1.5.3
-Requires:  cglib >= 0:2.1.3
+Requires:  cglib-nohook >= 0:2.1.3
 Requires:  asm >= 0:1.5.3
 %if %{gcj_support}
-BuildRequires:    gnu-crypto
 BuildRequires:    java-gcj-compat-devel
 Requires(post):   java-gcj-compat
 Requires(postun): java-gcj-compat
@@ -101,9 +100,7 @@ Group:          Development/Java
 
 %prep
 %setup -q -n jmock-%version
-for j in $(find . -name "*.jar"); do
-    mv $j $j.no
-done
+%remove_java_binaries
 
 %patch0 -b .sav
 %patch1 -b .sav
