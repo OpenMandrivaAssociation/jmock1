@@ -35,7 +35,7 @@
 
 Name:           jmock1
 Version:        1.2.0
-Release:        %mkrel 2.0.2
+Release:        %mkrel 2.0.3
 Summary:        Test Java code using mock objects
 
 Group:          Development/Java
@@ -56,7 +56,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 BuildArch:      noarch
 %endif
 BuildRequires:	java-devel >= 1.7.0
-BuildRequires:  jpackage-utils >= 0:1.7.2
+BuildRequires:  java-rpmbuild >= 0:1.7.2
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit
 BuildRequires:  junit >= 0:3.8.1
