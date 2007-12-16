@@ -31,10 +31,11 @@
 %define gcj_support %{?_with_gcj_support:1}%{!?_with_gcj_support:%{?_without_gcj_support:0}%{!?_without_gcj_support:%{?_gcj_support:%{_gcj_support}}%{!?_gcj_support:0}}}
 
 %define section   free
+%define maven_name jmock
 
 Name:           jmock1
 Version:        1.2.0
-Release:        %mkrel 2.0.1
+Release:        %mkrel 2.0.1.1
 Summary:        Test Java code using mock objects
 
 Group:          Development/Java
@@ -128,15 +129,15 @@ install -pm 644 build/jmock-tests-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/jmock-tests-%{version}.jar
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
-%add_to_maven_depmap %{name} %{name}-cglib %{version} JPP %{name}-cglib
+%add_to_maven_depmap %{maven_name} %{maven_name} %{version} JPP %{maven_name}
+%add_to_maven_depmap %{maven_name} %{maven_name}-cglib %{version} JPP %{maven_name}-cglib
 
 # poms
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
 install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{maven_name}.pom
 install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-cglib.pom
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{maven_name}-cglib.pom
 
 #
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -153,15 +154,6 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
-
-%postun javadoc
-if [ "$1" = "0" ]; then
-    rm -f %{_javadocdir}/%{name}
-fi
 
 %post
 %update_maven_depmap
@@ -195,7 +187,7 @@ fi
 %files javadoc
 %defattr(-,root,root,-)
 %doc %{_javadocdir}/%{name}-%{version}
-%ghost %doc %{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}
 
 %files demo
 %defattr(-,root,root,-)
