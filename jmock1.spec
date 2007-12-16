@@ -35,7 +35,7 @@
 
 Name:           jmock1
 Version:        1.2.0
-Release:        %mkrel 2.0.1.1
+Release:        %mkrel 2.0.2
 Summary:        Test Java code using mock objects
 
 Group:          Development/Java
