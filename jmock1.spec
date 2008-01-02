@@ -50,6 +50,7 @@ Source2:        jmock-cglib-1.2.0.pom
 Patch0:         jmock-1.2.0-AssertMo.patch
 Patch1:         jmock-1.2.0-build_xml.patch
 Patch2:		jmock-asm_rename.patch
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %if ! %{gcj_support}
 BuildArch:      noarch
