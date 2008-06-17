@@ -136,12 +136,12 @@ install -pm 644 %{SOURCE2} \
 #
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr build/javadoc-%{version}/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} 
 #
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 cp -pr examples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 
-%{gcj_files}
+%{gcj_compile}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
