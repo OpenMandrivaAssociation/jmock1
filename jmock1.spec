@@ -58,9 +58,9 @@ BuildRequires:  java-rpmbuild
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit
 BuildRequires:  junit >= 0:3.8.1
-BuildRequires:  cglib-nohook >= 0:2.1.3
+BuildRequires:  cglib
 BuildRequires:  asm >= 0:1.5.3
-Requires:  cglib-nohook >= 0:2.1.3
+Requires:  cglib
 Requires:  asm >= 0:1.5.3
 %if %{gcj_support}
 BuildRequires:    java-gcj-compat-devel
@@ -106,7 +106,7 @@ export OPT_JAR_LIST="ant/ant-junit junit"
 
 export CLASSPATH=$(build-classpath \
 asm \
-cglib-nohook)
+cglib)
 
 CLASSPATH=build/classes:$CLASSPATH
 %ant -Dbuild.sysclasspath=only package
