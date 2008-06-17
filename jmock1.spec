@@ -28,8 +28,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support %{?_with_gcj_support:1}%{!?_with_gcj_support:%{?_without_gcj_support:0}%{!?_without_gcj_support:%{?_gcj_support:%{_gcj_support}}%{!?_gcj_support:0}}}
-
 %define section   free
 %define maven_name jmock
 
@@ -55,8 +53,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 %if ! %{gcj_support}
 BuildArch:      noarch
 %endif
-BuildRequires:	java-devel >= 1.7.0
-BuildRequires:  java-rpmbuild >= 0:1.7.2
+BuildRequires:	java-devel 
+BuildRequires:  java-rpmbuild 
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit
 BuildRequires:  junit >= 0:3.8.1
@@ -66,8 +64,6 @@ Requires:  cglib-nohook >= 0:2.1.3
 Requires:  asm >= 0:1.5.3
 %if %{gcj_support}
 BuildRequires:    java-gcj-compat-devel
-Requires(post):   java-gcj-compat
-Requires(postun): java-gcj-compat
 %endif
 Provides:	jmock = %{version}-%{release}
 
@@ -86,8 +82,6 @@ The jMock package:
 %package        javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires(post):   /bin/rm,/bin/ln
-Requires(postun): /bin/rm
 
 %description    javadoc
 %{summary}.
@@ -115,7 +109,7 @@ asm \
 cglib-nohook)
 
 CLASSPATH=build/classes:$CLASSPATH
-ant -Dbuild.sysclasspath=only package
+%ant -Dbuild.sysclasspath=only package
 
 
 %install
@@ -147,10 +141,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 cp -pr examples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 
-%if %{gcj_support}
-export CLASSPATH=$(build-classpath gnu-crypto)
-%{_bindir}/aot-compile-rpm
-%endif
+%{gcj_files}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -158,19 +149,13 @@ rm -rf $RPM_BUILD_ROOT
 %post
 %update_maven_depmap
 %if %{gcj_support}
-if [ -x %{_bindir}/rebuild-gcj-db ]
-then
-  %{_bindir}/rebuild-gcj-db
-fi
+%{update_gcjdb}
 %endif
 
 %postun
 %update_maven_depmap
 %if %{gcj_support}
-if [ -x %{_bindir}/rebuild-gcj-db ]
-then
-  %{_bindir}/rebuild-gcj-db
-fi
+%{clean_gcjdb}
 %endif
 
 %files
@@ -179,10 +164,7 @@ fi
 %{_javadir}/*.jar
 %{_datadir}/maven2/poms/*
 %{_mavendepmapfragdir}
-%if %{gcj_support}
-%dir %attr(-,root,root) %{_libdir}/gcj/%{name}
-%attr(-,root,root) %{_libdir}/gcj/%{name}/%{name}*%{version}.jar.*
-%endif
+%{gcj_files}
 
 %files javadoc
 %defattr(-,root,root,-)
