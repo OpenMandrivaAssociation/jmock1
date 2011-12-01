@@ -113,38 +113,38 @@ CLASSPATH=build/classes:$CLASSPATH
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 install -Dpm 644 build/jmock-core-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/jmock-%{version}.jar
+  %{buildroot}%{_javadir}/jmock-%{version}.jar
 install -pm 644 build/jmock-cglib-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/jmock-cglib-%{version}.jar
+  %{buildroot}%{_javadir}/jmock-cglib-%{version}.jar
 install -pm 644 build/jmock-tests-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/jmock-tests-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
+  %{buildroot}%{_javadir}/jmock-tests-%{version}.jar
+(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
 %add_to_maven_depmap %{maven_name} %{maven_name} %{version} JPP %{maven_name}
 %add_to_maven_depmap %{maven_name} %{maven_name}-cglib %{version} JPP %{maven_name}-cglib
 
 # poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
 install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{maven_name}.pom
+    %{buildroot}%{_datadir}/maven2/poms/JPP.%{maven_name}.pom
 install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{maven_name}-cglib.pom
+    %{buildroot}%{_datadir}/maven2/poms/JPP.%{maven_name}-cglib.pom
 
 #
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr build/javadoc-%{version}/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} 
+install -dm 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
+cp -pr build/javadoc-%{version}/* %{buildroot}%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name} 
 #
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-cp -pr examples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
+install -dm 755 %{buildroot}%{_datadir}/%{name}-%{version}
+cp -pr examples/* %{buildroot}%{_datadir}/%{name}-%{version}
 
 %{gcj_compile}
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
 %update_maven_depmap
