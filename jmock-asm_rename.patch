@@ -1,0 +1,26 @@
+--- jmock-1.2.0/src/atest/jmock/ClassLoaderAcceptanceTest.java	2007-04-10 10:27:02.000000000 +0200
++++ jmock-1.2.0.n/src/atest/jmock/ClassLoaderAcceptanceTest.java	2007-09-14 15:30:13.000000000 +0200
+@@ -2,8 +2,8 @@
+  */
+ package atest.jmock;
+ 
+-import net.sf.cglib.asm.ClassWriter;
+-import net.sf.cglib.asm.Constants;
++import org.objectweb.asm.ClassWriter;
++import org.objectweb.asm.Constants;
+ 
+ import org.jmock.MockObjectTestCase;
+ 
+--- jmock-1.2.0/src/test/jmock/core/testsupport/MethodFactory.java	2007-04-10 10:27:02.000000000 +0200
++++ jmock-1.2.0.n/src/test/jmock/core/testsupport/MethodFactory.java	2007-09-14 15:32:30.000000000 +0200
+@@ -5,8 +5,8 @@
+ 
+ import java.lang.reflect.Method;
+ 
+-import net.sf.cglib.asm.ClassWriter;
+-import net.sf.cglib.asm.Type;
++import org.objectweb.asm.ClassWriter;
++import org.objectweb.asm.Type;
+ import net.sf.cglib.core.Constants;
+ 
+ 
