@@ -7,7 +7,7 @@
 -import net.sf.cglib.asm.ClassWriter;
 -import net.sf.cglib.asm.Constants;
 +import org.objectweb.asm.ClassWriter;
-+import org.objectweb.asm.Constants;
++import org.objectweb.asm.Opcodes;
  
  import org.jmock.MockObjectTestCase;
  
