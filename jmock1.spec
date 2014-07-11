@@ -34,7 +34,7 @@
 Summary:	Test Java code using mock objects
 Name:		jmock1
 Version:	1.2.0
-Release:	8
+Release:	9
 Group:		Development/Java
 License:	Open Source
 Url:		http://jmock.codehaus.org/
