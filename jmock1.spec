@@ -37,7 +37,7 @@ Version:	1.2.0
 Release:	10
 Group:		Development/Java
 License:	Open Source
-Url:		http://jmock.codehaus.org/
+Url:		https://jmock.codehaus.org/
 Source0:	jmock-1.2.0.tar.gz
 # svn export http://svn.codehaus.org/jmock/tags/1.2.0/ jmock-1.2.0
 Source1:	jmock-1.2.0.pom
